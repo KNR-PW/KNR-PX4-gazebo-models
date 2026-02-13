@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.9">
+  <world name="terrain">
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type="adiabatic" />
+    <scene>
+      <grid>false</grid>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <light name="sunUTC" type="directional">
+      <pose>0 0 500 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>0.001 0.625 -0.78</direction>
+      <diffuse>0.904 0.904 0.904 1</diffuse>
+      <specular>0.271 0.271 0.271 1</specular>
+      <attenuation>
+        <range>2000</range>
+        <linear>0</linear>
+        <constant>1</constant>
+        <quadratic>0</quadratic>
+      </attenuation>
+    </light>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+
+    <!-- Terrain -->
+    <include>
+      <name>city_terrain_1</name>
+      <pose>0 0 0 0 0 0</pose>
+      <uri>model://city_terrain</uri>
+    </include>
+
+    <!-- Ocean at water level -->
+    <include>
+      <name>ocean_2</name>
+      <pose>40 -20 -2 0 0 0</pose>
+      <uri>model://ocean</uri>
+    </include>
+
+    <!-- Oak trees -->
+    <include>
+      <name>oak_tree_1</name>
+      <pose>15 10 2.5 0 0 0</pose>
+      <uri>model://Oak tree</uri>
+    </include>
+    <include>
+      <name>oak_tree_2</name>
+      <pose>-20 15 2.5 0 0 0.5</pose>
+      <uri>model://Oak tree</uri>
+    </include>
+    <include>
+      <name>oak_tree_3</name>
+      <pose>25 -18 2.5 0 0 1.2</pose>
+      <uri>model://Oak tree</uri>
+    </include>
+    <include>
+      <name>oak_tree_4</name>
+      <pose>-15 -25 2.5 0 0 2.1</pose>
+      <uri>model://Oak tree</uri>
+    </include>
+    <include>
+      <name>oak_tree_5</name>
+      <pose>30 25 2.5 0 0 0.8</pose>
+      <uri>model://Oak tree</uri>
+    </include>
+
+    <!-- Tents -->
+    <include>
+      <name>tent_1</name>
+      <pose>-10 20 2.5 0 0 0.3</pose>
+      <uri>model://tent</uri>
+    </include>
+    <include>
+      <name>tent_2</name>
+      <pose>35 -10 2.5 0 0 1.5</pose>
+      <uri>model://tent</uri>
+    </include>
+
+    <!-- Pine trees -->
+    <include>
+      <name>pine_tree_1</name>
+      <pose>-30 -10 2.5 0 0 0</pose>
+      <uri>model://Pine Tree</uri>
+    </include>
+    <include>
+      <name>pine_tree_2</name>
+      <pose>40 15 2.5 0 0 0.7</pose>
+      <uri>model://Pine Tree</uri>
+    </include>
+    <include>
+      <name>pine_tree_3</name>
+      <pose>-25 30 2.5 0 0 1.4</pose>
+      <uri>model://Pine Tree</uri>
+    </include>
+
+  </world>
+</sdf>
