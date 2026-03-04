@@ -307,6 +307,16 @@
       <child>front_motor_column</child>
       <parent>base_link</parent>
     </joint>
+    <include merge='true'>
+      <uri>model://mono_cam</uri>
+      <pose>0 0 -0.06 0 1.5707 0</pose>
+      <name>mono_cam</name>
+    </include>
+    <joint name="CameraJoint" type="fixed">
+      <parent>base_link</parent>
+      <child>camera_link</child>
+      <pose relative_to="base_link">0 0 0 0 1.5707 0</pose>
+    </joint>
     <include merge="true">
       <uri>model://airspeed</uri>
       <pose>0. 0. 0. 0. 0. 0.</pose>
