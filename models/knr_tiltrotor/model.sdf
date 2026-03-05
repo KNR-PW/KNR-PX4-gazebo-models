@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- DO NOT EDIT: Generated from standard_vtol.sdf.jinja -->
-<sdf version='1.5'>
+<sdf version='1.9'>
   <model name='knr_tiltrotor'>
     <pose>0 0 1.246 0 0 0</pose>
     <link name='base_link'>
