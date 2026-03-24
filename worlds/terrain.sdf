@@ -11,9 +11,23 @@
     <atmosphere type="adiabatic" />
     <scene>
       <grid>false</grid>
-      <ambient>0.4 0.4 0.4 1</ambient>
-      <background>0.7 0.7 0.7 1</background>
+      <!-- Slightly darker ambient + sky-like background for more realistic camera frames -->
+      <ambient>0.28 0.29 0.30 1</ambient>
+      <background>0.60 0.72 0.88 1</background>
       <shadows>true</shadows>
+      <!-- Subtle haze adds depth and reduces "flat" look (keep it light for dataset clarity) -->
+      <fog>
+        <type>linear</type>
+        <color>0.60 0.72 0.88 1</color>
+        <start>180</start>
+        <end>1200</end>
+        <density>0.002</density>
+      </fog>
+      <sky>
+        <clouds>
+          <speed>8</speed>
+        </clouds>
+      </sky>
     </scene>
 
     <gui fullscreen='0'>
@@ -25,8 +39,9 @@
         </gz-gui>
         <engine>ogre2</engine>
         <scene>scene</scene>
-        <ambient_light>0.4 0.4 0.4</ambient_light>
-        <background_color>0.8 0.8 0.8</background_color>
+        <!-- Keep GUI preview consistent with <scene> for nicer frames -->
+        <ambient_light>0.28 0.29 0.30</ambient_light>
+        <background_color>0.60 0.72 0.88</background_color>
         <camera_pose>-6 0 6 0 0.5 0</camera_pose>
       </plugin>
       <plugin name='World control' filename='WorldControl'>
@@ -59,7 +74,35 @@
         <real_time_factor>true</real_time_factor>
         <iterations>true</iterations>
       </plugin>
-      <plugin name='Entity tree' filename='EntityTree'/>
+      <plugin name='Entity tree' filename='EntityTree'>
+        <gz-gui>
+          <property key='state' type='string'>docked</property>
+          <property key='showTitleBar' type='bool'>true</property>
+          <property key='width' type='double'>300</property>
+          <property key='height' type='double'>420</property>
+          <property key='anchor' type='string'>right</property>
+        </gz-gui>
+      </plugin>
+      <plugin name='Transform control' filename='TransformControl'>
+        <gz-gui>
+          <title>Transform control</title>
+          <property key='state' type='string'>docked</property>
+          <property key='showTitleBar' type='bool'>true</property>
+          <property key='width' type='double'>300</property>
+          <property key='height' type='double'>120</property>
+          <property key='anchor' type='string'>right</property>
+        </gz-gui>
+      </plugin>
+      <plugin name='Component inspector' filename='ComponentInspector'>
+        <gz-gui>
+          <title>Component inspector</title>
+          <property key='state' type='string'>docked</property>
+          <property key='showTitleBar' type='bool'>true</property>
+          <property key='width' type='double'>300</property>
+          <property key='height' type='double'>260</property>
+          <property key='anchor' type='string'>right</property>
+        </gz-gui>
+      </plugin>
       <plugin name='Drone Camera' filename='ImageDisplay'>
         <gz-gui>
           <property key='state' type='string'>floating</property>
@@ -69,7 +112,7 @@
           <property key='x' type='double'>0</property>
           <property key='showTitleBar' type='bool'>true</property>
         </gz-gui>
-        <topic>camera</topic>
+        <topic>/rgb_camera/image</topic>
       </plugin>
     </gui>
 
@@ -77,9 +120,31 @@
       <pose>0 0 500 0 -0 0</pose>
       <cast_shadows>true</cast_shadows>
       <intensity>1</intensity>
-      <direction>0.001 0.625 -0.78</direction>
-      <diffuse>0.904 0.904 0.904 1</diffuse>
-      <specular>0.271 0.271 0.271 1</specular>
+      <!-- Lower sun angle gives longer, more informative shadows for detection -->
+      <direction>0.10 0.40 -0.60</direction>
+      <diffuse>0.95 0.95 0.95 1</diffuse>
+      <specular>0.18 0.18 0.18 1</specular>
+      <attenuation>
+        <range>2000</range>
+        <linear>0</linear>
+        <constant>1</constant>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <!-- Tune shadow quality without going too heavy -->
+      <shadow_caster>
+        <near_clip>2</near_clip>
+        <far_clip>1500</far_clip>
+      </shadow_caster>
+    </light>
+
+    <!-- Low-cost fill light to soften contrast (no shadows) -->
+    <light name="fill_light" type="directional">
+      <pose>0 0 500 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <intensity>0.22</intensity>
+      <direction>-0.30 -0.20 -0.80</direction>
+      <diffuse>0.75 0.80 0.90 1</diffuse>
+      <specular>0 0 0 1</specular>
       <attenuation>
         <range>2000</range>
         <linear>0</linear>
@@ -100,7 +165,7 @@
     <include>
       <name>city_terrain_1</name>
       <pose>0 0 0 0 0 0</pose>
-      <uri>model://city_terrain</uri>
+      <uri>model://city_terrain_hq</uri>
     </include>
 
     <!-- Ocean at water level -->
@@ -110,60 +175,439 @@
       <uri>model://ocean</uri>
     </include>
 
-    <!-- Oak trees -->
+    <!--
+      Dataset anchor:
+      If terrain / ground level changes, update ONLY this pose (especially Z).
+      All target and clutter objects are placed relative to this anchor.
+    -->
+    <frame name="dataset_anchor">
+      <pose>15.19 -197.69 2.29 0 0 0</pose>
+    </frame>
+
+    <!-- Single target tent — managed by scripts/tent_color_cycle.sh -->
+    <!-- Uncomment below to restore static green tent (disable color cycling) -->
+    <!--
     <include>
-      <name>oak_tree_1</name>
-      <pose>15 10 2.5 0 0 0</pose>
-      <uri>model://Oak tree</uri>
+      <name>tent_target</name>
+      <pose relative_to="dataset_anchor">0 0 0 0 0 0.55</pose>
+      <uri>model://tent</uri>
+      <static>true</static>
+    </include>
+    -->
+
+
+    <!-- Mixed trees (new + existing) -->
+    <include>
+      <name>tree_1_a</name>
+      <pose relative_to="dataset_anchor">24.0 18.0 0 0 0 0.20</pose>
+      <uri>model://tree_1</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>oak_tree_2</name>
-      <pose>-20 15 2.5 0 0 0.5</pose>
-      <uri>model://Oak tree</uri>
+      <name>tree_2_a</name>
+      <pose relative_to="dataset_anchor">-30.0 20.0 0 0 0 0.90</pose>
+      <uri>model://tree_2</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>oak_tree_3</name>
-      <pose>25 -18 2.5 0 0 1.2</pose>
-      <uri>model://Oak tree</uri>
+      <name>tree_3_a</name>
+      <pose relative_to="dataset_anchor">34.0 -12.0 0 0 0 1.10</pose>
+      <uri>model://tree_3</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>oak_tree_4</name>
-      <pose>-15 -25 2.5 0 0 2.1</pose>
-      <uri>model://Oak tree</uri>
+      <name>tree_4_a</name>
+      <pose relative_to="dataset_anchor">-38.0 -24.0 0 0 0 0.70</pose>
+      <uri>model://tree_4</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>oak_tree_5</name>
-      <pose>30 25 2.5 0 0 0.8</pose>
+      <name>tree_5_a</name>
+      <pose relative_to="dataset_anchor">10.0 -34.0 0 0 0 2.10</pose>
+      <uri>model://tree_5</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>tree_6_a</name>
+      <pose relative_to="dataset_anchor">-6.0 38.0 0 0 0 2.60</pose>
+      <uri>model://tree_6</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>tree_7_a</name>
+      <pose relative_to="dataset_anchor">42.0 8.0 0 0 0 1.40</pose>
+      <uri>model://tree_7</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>palm_tree_a</name>
+      <pose relative_to="dataset_anchor">-26.0 -34.0 0 0 0 0.50</pose>
+      <uri>model://palm_tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_tree_a</name>
+      <pose relative_to="dataset_anchor">30.0 30.0 0 0 0 1.30</pose>
       <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>pine_tree_a</name>
+      <pose relative_to="dataset_anchor">-34.0 30.0 0 0 0 2.20</pose>
+      <uri>model://Pine Tree</uri>
+      <static>true</static>
     </include>
 
-    <!-- Tents -->
+    <!-- Extra oak forest further away from target -->
     <include>
-      <name>tent_1</name>
-      <pose>-10 20 2.5 0 0 0.3</pose>
-      <uri>model://tent</uri>
+      <name>oak_forest_1</name>
+      <pose relative_to="dataset_anchor">58.0 46.0 0 0 0 0.20</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>tent_2</name>
-      <pose>35 -10 2.5 0 0 1.5</pose>
-      <uri>model://tent</uri>
+      <name>oak_forest_2</name>
+      <pose relative_to="dataset_anchor">64.0 38.0 0 0 0 1.00</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_forest_3</name>
+      <pose relative_to="dataset_anchor">72.0 50.0 0 0 0 2.30</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_forest_4</name>
+      <pose relative_to="dataset_anchor">54.0 60.0 0 0 0 2.70</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_forest_5</name>
+      <pose relative_to="dataset_anchor">80.0 42.0 0 0 0 1.60</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_forest_6</name>
+      <pose relative_to="dataset_anchor">67.0 64.0 0 0 0 0.70</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>tree_2_b</name>
+      <pose relative_to="dataset_anchor">-56.0 44.0 0 0 0 0.60</pose>
+      <uri>model://tree_2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>tree_5_b</name>
+      <pose relative_to="dataset_anchor">52.0 -48.0 0 0 0 2.40</pose>
+      <uri>model://tree_5</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>tree_7_b</name>
+      <pose relative_to="dataset_anchor">-62.0 -36.0 0 0 0 1.10</pose>
+      <uri>model://tree_7</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_forest_7</name>
+      <pose relative_to="dataset_anchor">88.0 58.0 0 0 0 2.00</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>oak_forest_8</name>
+      <pose relative_to="dataset_anchor">-84.0 52.0 0 0 0 1.30</pose>
+      <uri>model://Oak tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>pine_tree_b</name>
+      <pose relative_to="dataset_anchor">74.0 -62.0 0 0 0 0.90</pose>
+      <uri>model://Pine Tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>palm_tree_b</name>
+      <pose relative_to="dataset_anchor">-72.0 68.0 0 0 0 2.20</pose>
+      <uri>model://palm_tree</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>tree_4_b</name>
+      <pose relative_to="dataset_anchor">58.0 22.0 0 0 0 1.70</pose>
+      <uri>model://tree_4</uri>
+      <static>true</static>
     </include>
 
-    <!-- Pine trees -->
+    <!-- Bush ring near target -->
     <include>
-      <name>pine_tree_1</name>
-      <pose>-30 -10 2.5 0 0 0</pose>
-      <uri>model://Pine Tree</uri>
+      <name>bush_1_a</name>
+      <pose relative_to="dataset_anchor">-9.0 5.0 0 0 0 2.30</pose>
+      <uri>model://bush_1</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>pine_tree_2</name>
-      <pose>40 15 2.5 0 0 0.7</pose>
-      <uri>model://Pine Tree</uri>
+      <name>bush_2_a</name>
+      <pose relative_to="dataset_anchor">6.0 -10.0 0 0 0 1.50</pose>
+      <uri>model://bush_2</uri>
+      <static>true</static>
     </include>
     <include>
-      <name>pine_tree_3</name>
-      <pose>-25 30 2.5 0 0 1.4</pose>
+      <name>bush_3_a</name>
+      <pose relative_to="dataset_anchor">-12.0 -8.0 0 0 0 0.90</pose>
+      <uri>model://bush_3</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_4_a</name>
+      <pose relative_to="dataset_anchor">14.0 -14.0 0 0 0 2.70</pose>
+      <uri>model://bush_4</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_5_a</name>
+      <pose relative_to="dataset_anchor">-16.0 12.0 0 0 0 1.80</pose>
+      <uri>model://bush_5</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_1_b</name>
+      <pose relative_to="dataset_anchor">-5.5 -4.0 0 0 0 2.10</pose>
+      <uri>model://bush_1</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_2_b</name>
+      <pose relative_to="dataset_anchor">0.8 9.0 0 0 0 1.20</pose>
+      <uri>model://bush_2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_3_b</name>
+      <pose relative_to="dataset_anchor">10.5 0.5 0 0 0 0.80</pose>
+      <uri>model://bush_3</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_4_b</name>
+      <pose relative_to="dataset_anchor">-10.8 1.0 0 0 0 2.60</pose>
+      <uri>model://bush_4</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_5_b</name>
+      <pose relative_to="dataset_anchor">2.5 12.0 0 0 0 1.50</pose>
+      <uri>model://bush_5</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_1_c</name>
+      <pose relative_to="dataset_anchor">-36.0 28.0 0 0 0 1.20</pose>
+      <uri>model://bush_1</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_2_c</name>
+      <pose relative_to="dataset_anchor">41.0 -26.0 0 0 0 2.50</pose>
+      <uri>model://bush_2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_3_c</name>
+      <pose relative_to="dataset_anchor">-46.0 -34.0 0 0 0 0.40</pose>
+      <uri>model://bush_3</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_4_c</name>
+      <pose relative_to="dataset_anchor">53.0 36.0 0 0 0 1.90</pose>
+      <uri>model://bush_4</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>bush_5_c</name>
+      <pose relative_to="dataset_anchor">-58.0 14.0 0 0 0 2.70</pose>
+      <uri>model://bush_5</uri>
+      <static>true</static>
+    </include>
+
+    <!-- Additional vegetation clusters for more natural distribution -->
+    <include>
+      <name>cluster_west_tree_1</name>
+      <pose relative_to="dataset_anchor">-48.0 34.0 0 0 0 0.35</pose>
+      <uri>model://tree_3</uri>
+      <scale>1.15 1.15 1.15</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_west_tree_2</name>
+      <pose relative_to="dataset_anchor">-55.0 29.0 0 0 0 1.65</pose>
+      <uri>model://tree_1</uri>
+      <scale>0.92 0.92 0.92</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_west_bush_1</name>
+      <pose relative_to="dataset_anchor">-51.0 37.0 0 0 0 2.10</pose>
+      <uri>model://bush_2</uri>
+      <scale>1.20 1.20 1.20</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_west_bush_2</name>
+      <pose relative_to="dataset_anchor">-44.0 31.5 0 0 0 0.80</pose>
+      <uri>model://bush_4</uri>
+      <scale>0.85 0.85 0.85</scale>
+      <static>true</static>
+    </include>
+
+    <include>
+      <name>cluster_south_tree_1</name>
+      <pose relative_to="dataset_anchor">36.0 -43.0 0 0 0 1.15</pose>
+      <uri>model://tree_6</uri>
+      <scale>1.10 1.10 1.10</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_south_tree_2</name>
+      <pose relative_to="dataset_anchor">44.0 -39.0 0 0 0 2.45</pose>
+      <uri>model://tree_4</uri>
+      <scale>0.95 0.95 0.95</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_south_bush_1</name>
+      <pose relative_to="dataset_anchor">39.0 -46.0 0 0 0 0.55</pose>
+      <uri>model://bush_1</uri>
+      <scale>1.18 1.18 1.18</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_south_bush_2</name>
+      <pose relative_to="dataset_anchor">47.5 -42.5 0 0 0 1.75</pose>
+      <uri>model://bush_3</uri>
+      <scale>0.90 0.90 0.90</scale>
+      <static>true</static>
+    </include>
+
+    <include>
+      <name>cluster_north_tree_1</name>
+      <pose relative_to="dataset_anchor">62.0 53.0 0 0 0 2.75</pose>
+      <uri>model://Oak tree</uri>
+      <scale>1.25 1.25 1.25</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_north_tree_2</name>
+      <pose relative_to="dataset_anchor">70.0 49.5 0 0 0 1.05</pose>
       <uri>model://Pine Tree</uri>
+      <scale>0.88 0.88 0.88</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_north_bush_1</name>
+      <pose relative_to="dataset_anchor">66.0 56.5 0 0 0 0.20</pose>
+      <uri>model://bush_5</uri>
+      <scale>1.22 1.22 1.22</scale>
+      <static>true</static>
+    </include>
+    <include>
+      <name>cluster_north_bush_2</name>
+      <pose relative_to="dataset_anchor">58.5 50.0 0 0 0 1.35</pose>
+      <uri>model://bush_2</uri>
+      <scale>0.86 0.86 0.86</scale>
+      <static>true</static>
+    </include>
+
+    <!-- Rock clutter (hard negatives / occlusions) -->
+    <include>
+      <name>falling_rock_1</name>
+      <pose relative_to="dataset_anchor">5.0 9.0 0.05 0 0 0.70</pose>
+      <uri>model://Falling Rock 2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>falling_rock_2</name>
+      <pose relative_to="dataset_anchor">-8.0 -6.0 0.05 0 0 1.60</pose>
+      <uri>model://Falling Rock 2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>falling_rock_3</name>
+      <pose relative_to="dataset_anchor">14.0 10.0 0.05 0 0 0.30</pose>
+      <uri>model://Falling Rock 2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>falling_rock_4</name>
+      <pose relative_to="dataset_anchor">-14.0 -12.0 0.05 0 0 2.40</pose>
+      <uri>model://Falling Rock 2</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_1</name>
+      <pose relative_to="dataset_anchor">2.0 -7.0 0.05 0 0 0.20</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_2</name>
+      <pose relative_to="dataset_anchor">-3.5 5.5 0.05 0 0 2.00</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_3</name>
+      <pose relative_to="dataset_anchor">11.5 1.8 0.05 0 0 0.50</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_4</name>
+      <pose relative_to="dataset_anchor">-13.0 15.0 0.05 0 0 1.10</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_5</name>
+      <pose relative_to="dataset_anchor">7.5 13.0 0.05 0 0 0.60</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_6</name>
+      <pose relative_to="dataset_anchor">-6.0 11.0 0.05 0 0 2.20</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_7</name>
+      <pose relative_to="dataset_anchor">15.0 -4.5 0.05 0 0 1.40</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_8</name>
+      <pose relative_to="dataset_anchor">-17.0 2.0 0.05 0 0 2.80</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_9</name>
+      <pose relative_to="dataset_anchor">0.0 -15.0 0.05 0 0 0.90</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <name>small_rock_10</name>
+      <pose relative_to="dataset_anchor">18.0 16.0 0.05 0 0 1.90</pose>
+      <uri>model://Small Rock Fall</uri>
+      <static>true</static>
     </include>
 
   </world>
