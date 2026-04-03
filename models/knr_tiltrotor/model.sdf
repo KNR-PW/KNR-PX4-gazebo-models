@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- DO NOT EDIT: Generated from standard_vtol.sdf.jinja -->
-<sdf version='1.9'>
-  <model name='knr_tiltrotor'>
+<?xml version='1.0' encoding='UTF-8'?>
+<sdf version="1.9">
+  <model name="knr_tiltrotor">
     <pose>0 0 1.246 0 0 0</pose>
-    <link name='base_link'>
+    <link name="base_link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -17,7 +16,7 @@
           <izz>0.1477</izz>
         </inertia>
       </inertial>
-      <collision name='base_link_collision'>
+      <collision name="base_link_collision">
         <pose>-0.01 0 -0.08 0 0 0</pose>
         <geometry>
           <box>
@@ -38,7 +37,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='base_link_visual'>
+      <visual name="base_link_visual">
         <pose>0.53 -1.072 -0.1 1.5707963268 0 3.1415926536</pose>
         <geometry>
           <mesh>
@@ -46,55 +45,55 @@
             <uri>model://standard_vtol/meshes/x8_wing.dae</uri>
           </mesh>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
       </visual>
-      <visual name='tail_of_plane_up'>
+      <visual name="tail_of_plane_up">
         <pose>-0.502 0 0.07 0 0.3 0</pose>
         <geometry>
           <box>
             <size>0.65 0.08 0.03</size>
           </box>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
       </visual>
-      <visual name='tail_of_plane_down'>
+      <visual name="tail_of_plane_down">
         <pose>-0.502 0 -0.13 0 -0.33 0</pose>
         <geometry>
           <box>
             <size>0.65 0.08 0.03</size>
           </box>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
       </visual>
-      <visual name='back_motor_column'>
+      <visual name="back_motor_column">
         <pose>-0.802 0 0.17 0 0 0</pose>
         <geometry>
           <box>
             <size>0.05 0.85 0.03</size>
           </box>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
       </visual>
-      <visual name='front_arm'>
+      <visual name="front_arm">
         <pose>0.395 0 -0.16 0 0 0</pose>
         <geometry>
           <box>
             <size>0.05 0.05 0.15</size>
           </box>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
@@ -180,10 +179,10 @@
         <always_on>1</always_on>
         <update_rate>100</update_rate>
         <magnetometer>
-          <!-- TODO: update to fix units and coordinate system when we move past Harmonic -->
-          <!-- See https://github.com/gazebosim/gz-sim/pull/2460 -->
-          <!-- 3mgauss RMS: NOTE: noise is in tesla but sensor reports data in gauss -->
-          <!-- Noise modeled after IIS2MDC -->
+          
+          
+          
+          
           <x>
             <noise type="gaussian">
               <stddev>0.0001</stddev>
@@ -207,7 +206,7 @@
         <update_rate>30</update_rate>
       </sensor>
     </link>
-    <link name='back_holder'>
+    <link name="back_holder">
       <pose>-0.802 0 -0.23 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -221,7 +220,7 @@
           <izz>0.0167604</izz>
         </inertia>
       </inertial>
-      <collision name='back_holder_collision'>
+      <collision name="back_holder_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <box>
@@ -237,7 +236,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='back_holder_visual'>
+      <visual name="back_holder_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <box>
@@ -253,11 +252,11 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='back_holder_joint' type='fixed'>
+    <joint name="back_holder_joint" type="fixed">
       <child>back_holder</child>
       <parent>base_link</parent>
     </joint>
-    <link name='front_motor_column'>
+    <link name="front_motor_column">
       <pose>0.395 0 -0.23 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -271,7 +270,7 @@
           <izz>0.0167604</izz>
         </inertia>
       </inertial>
-      <collision name='front_motor_column_collision'>
+      <collision name="front_motor_column_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <box>
@@ -287,7 +286,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='front_motor_column_visual'>
+      <visual name="front_motor_column_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <box>
@@ -303,30 +302,30 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='front_motor_column_joint' type='fixed'>
+    <joint name="front_motor_column_joint" type="fixed">
       <child>front_motor_column</child>
       <parent>base_link</parent>
     </joint>
-    <include merge='true'>
+    <include merge="true">
       <uri>model://mono_cam</uri>
-      <pose>0.6 0 -0.05 0 0.7854 0</pose>
+      <pose>0.6 0 -0.05 0 0.5236 0</pose>
       <name>mono_cam</name>
     </include>
-    <joint name="CameraJoint" type="fixed">
+    <joint name="CameraJoint" type="revolute">
       <parent>base_link</parent>
       <child>camera_link</child>
-      <pose relative_to="base_link">0.6 0 -0.05 0 0.7854 0</pose>
-    </joint>
+      <pose relative_to="base_link">0.6 0 -0.05 0 0.5236 0</pose>
+    <axis><xyz>0 1 0</xyz><limit><lower>0</lower><upper>1.05</upper></limit><dynamics><damping>0.1</damping><friction>0.1</friction></dynamics></axis></joint>
     <include merge="true">
       <uri>model://airspeed</uri>
       <pose>0. 0. 0. 0. 0. 0.</pose>
     </include>
-    <joint name='airspeed_joint' type='fixed'>
+    <joint name="airspeed_joint" type="fixed">
       <parent>base_link</parent>
       <child>airspeed_link</child>
       <pose relative_to="base_link">-0 0 0 0 0 0</pose>
     </joint>
-    <link name='motor_0'>
+    <link name="motor_0">
       <pose>0.4 -0.4 -0.2 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -340,7 +339,7 @@
           <izz>0.0167604</izz>
         </inertia>
       </inertial>
-      <collision name='motor_0_collision'>
+      <collision name="motor_0_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -357,7 +356,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='motor_0_visual'>
+      <visual name="motor_0_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -375,7 +374,7 @@
       <self_collide>0</self_collide>
     </link>
 
-    <joint name='motor_0_joint' type='revolute'>
+    <joint name="motor_0_joint" type="revolute">
       <child>motor_0</child>
       <parent>front_motor_column</parent>
       <axis>
@@ -393,7 +392,7 @@
       </axis>
     </joint>
 
-    <link name='rotor_0'>
+    <link name="rotor_0">
       <pose>0.4 -0.4 -0.175 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -407,7 +406,7 @@
           <izz>0.000167604</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_0_collision'>
+      <collision name="rotor_0_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -424,7 +423,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='rotor_0_visual'>
+      <visual name="rotor_0_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -432,7 +431,7 @@
             <uri>model://standard_vtol/meshes/iris_prop_ccw.dae</uri>
           </mesh>
         </geometry>
-        <material>  <!-- Blue -->
+        <material>  
           <ambient>0 0 1 1.0</ambient>
           <diffuse>0 0 1 1.0</diffuse>
         </material>
@@ -441,7 +440,7 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='rotor_0_joint' type='revolute'>
+    <joint name="rotor_0_joint" type="revolute">
       <child>rotor_0</child>
       <parent>motor_0</parent>
       <axis>
@@ -457,7 +456,7 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <link name='motor_1'>
+    <link name="motor_1">
       <pose>-0.8 0.4 0.2 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -471,7 +470,7 @@
           <izz>0.0167604</izz>
         </inertia>
       </inertial>
-      <collision name='motor_1_collision'>
+      <collision name="motor_1_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -488,7 +487,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='motor_1_visual'>
+      <visual name="motor_1_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -505,7 +504,7 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='motor_1_joint' type='revolute'>
+    <joint name="motor_1_joint" type="revolute">
       <child>motor_1</child>
       <parent>base_link</parent>
       <axis>
@@ -522,7 +521,7 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <link name='rotor_1'>
+    <link name="rotor_1">
       <pose>-0.8 0.4 0.225 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -536,7 +535,7 @@
           <izz>0.000167604</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_1_collision'>
+      <collision name="rotor_1_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -553,7 +552,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='rotor_1_visual'>
+      <visual name="rotor_1_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -561,7 +560,7 @@
             <uri>model://standard_vtol/meshes/iris_prop_ccw.dae</uri>
           </mesh>
         </geometry>
-        <material>  <!-- Blue -->
+        <material>  
           <ambient>0 0 1 1.0</ambient>
           <diffuse>0 0 1 1.0</diffuse>
         </material>
@@ -570,7 +569,7 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='rotor_1_joint' type='revolute'>
+    <joint name="rotor_1_joint" type="revolute">
       <child>rotor_1</child>
       <parent>motor_1</parent>
       <axis>
@@ -587,7 +586,7 @@
       </axis>
     </joint>
 
-    <link name='motor_2'>
+    <link name="motor_2">
       <pose>0.4 0.4 -0.2 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -601,7 +600,7 @@
           <izz>0.0167604</izz>
         </inertia>
       </inertial>
-      <collision name='motor_2_collision'>
+      <collision name="motor_2_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -618,7 +617,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='motor_2_visual'>
+      <visual name="motor_2_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -636,7 +635,7 @@
       <self_collide>0</self_collide>
     </link>
 
-    <joint name='motor_2_joint' type='revolute'>
+    <joint name="motor_2_joint" type="revolute">
       <child>motor_2</child>
       <parent>front_motor_column</parent>
       <axis>
@@ -654,7 +653,7 @@
       </axis>
     </joint>
 
-    <link name='rotor_2'>
+    <link name="rotor_2">
       <pose>0.4 0.4 -0.175 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -668,7 +667,7 @@
           <izz>0.000167604</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_2_collision'>
+      <collision name="rotor_2_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -685,7 +684,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='rotor_2_visual'>
+      <visual name="rotor_2_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -693,7 +692,7 @@
             <uri>model://standard_vtol/meshes/iris_prop_cw.dae</uri>
           </mesh>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
@@ -702,7 +701,7 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='rotor_2_joint' type='revolute'>
+    <joint name="rotor_2_joint" type="revolute">
       <child>rotor_2</child>
       <parent>motor_2</parent>
       <axis>
@@ -718,7 +717,7 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <link name='motor_3'>
+    <link name="motor_3">
       <pose>-0.8 -0.4 0.2 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -732,7 +731,7 @@
           <izz>0.0167604</izz>
         </inertia>
       </inertial>
-      <collision name='motor_3_collision'>
+      <collision name="motor_3_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -749,7 +748,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='motor_3_visual'>
+      <visual name="motor_3_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -766,7 +765,7 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='motor_3_joint' type='revolute'>
+    <joint name="motor_3_joint" type="revolute">
       <child>motor_3</child>
       <parent>base_link</parent>
       <axis>
@@ -783,7 +782,7 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <link name='rotor_3'>
+    <link name="rotor_3">
       <pose>-0.8 -0.4 0.225 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -797,7 +796,7 @@
           <izz>0.000167604</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_3_collision'>
+      <collision name="rotor_3_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
@@ -814,7 +813,7 @@
           </friction>
         </surface>
       </collision>
-      <visual name='rotor_3_visual'>
+      <visual name="rotor_3_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -822,7 +821,7 @@
             <uri>model://standard_vtol/meshes/iris_prop_cw.dae</uri>
           </mesh>
         </geometry>
-        <material> <!-- DarkGrey-->
+        <material> 
           <ambient>0.175 0.175 0.175 1.0</ambient>
           <diffuse>0.175 0.175 0.175 1.0</diffuse>
         </material>
@@ -831,7 +830,7 @@
       <velocity_decay />
       <self_collide>0</self_collide>
     </link>
-    <joint name='rotor_3_joint' type='revolute'>
+    <joint name="rotor_3_joint" type="revolute">
       <child>rotor_3</child>
       <parent>motor_3</parent>
       <axis>
@@ -861,7 +860,7 @@
         </inertia>
         <pose>0 0.3 0 0.00 0 0.0</pose>
       </inertial>
-      <visual name='left_elevon_visual'>
+      <visual name="left_elevon_visual">
         <pose>-0.105 0.004 -0.034 1.5707963268 0 3.1415926536</pose>
         <geometry>
           <mesh>
@@ -869,7 +868,7 @@
             <uri>model://standard_vtol/meshes/x8_elevon_left.dae</uri>
           </mesh>
         </geometry>
-        <material>  <!-- Blue -->
+        <material>  
           <ambient>0 0 1 1.0</ambient>
           <diffuse>0 0 1 1.0</diffuse>
         </material>
@@ -888,7 +887,7 @@
         </inertia>
         <pose>0 -0.6 0 0.00 0 0.0</pose>
       </inertial>
-      <visual name='right_elevon_visual'>
+      <visual name="right_elevon_visual">
         <pose>0.281 -1.032 -0.034 1.5707963268 0 3.1415926536</pose>
         <geometry>
           <mesh>
@@ -896,7 +895,7 @@
             <uri>model://standard_vtol/meshes/x8_elevon_right.dae</uri>
           </mesh>
         </geometry>
-        <material>  <!-- Blue -->
+        <material>  
           <ambient>0 0 1 1.0</ambient>
           <diffuse>0 0 1 1.0</diffuse>
         </material>
@@ -930,7 +929,7 @@
         <pose>-0.5 0 0.05 0 0 0 </pose>
       </inertial>
     </link>
-    <joint name='left_elevon_joint' type='revolute'>
+    <joint name="left_elevon_joint" type="revolute">
       <parent>base_link</parent>
       <child>left_elevon</child>
       <pose>-0.18 0.6 -0.005 0 0 0.265</pose>
@@ -950,7 +949,7 @@
         </ode>
       </physics>
     </joint>
-    <joint name='right_elevon_joint' type='revolute'>
+    <joint name="right_elevon_joint" type="revolute">
       <parent>base_link</parent>
       <child>right_elevon</child>
       <pose>-0.18 -0.6 -0.005 0 0 -0.265</pose>
@@ -970,7 +969,7 @@
         </ode>
       </physics>
     </joint>
-    <joint name='elevator_joint' type='revolute'>
+    <joint name="elevator_joint" type="revolute">
       <parent>base_link</parent>
       <child>elevator</child>
       <pose> -0.5 0 0 0 0 0</pose>
@@ -990,14 +989,14 @@
         </ode>
       </physics>
     </joint>
-    <joint name='rudder_joint' type='revolute'>
+    <joint name="rudder_joint" type="revolute">
       <parent>base_link</parent>
       <child>rudder</child>
       <pose>-0.5 0 0.05 0.00 0 0.0</pose>
       <axis>
         <xyz>1 0 0</xyz>
         <limit>
-          <!-- -30/+30 deg. -->
+          
           <lower>-0.01</lower>
           <upper>0.01</upper>
         </limit>
@@ -1031,9 +1030,7 @@
       </control_joint_name>
       <control_joint_rad_to_cl>-1.0</control_joint_rad_to_cl>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>left_elevon_joint</joint_name>
       <sub_topic>servo_0</sub_topic>
     </plugin>
@@ -1057,9 +1054,7 @@
       </control_joint_name>
       <control_joint_rad_to_cl>-1.0</control_joint_rad_to_cl>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>right_elevon_joint</joint_name>
       <sub_topic>servo_1</sub_topic>
     </plugin>
@@ -1083,9 +1078,7 @@
       </control_joint_name>
       <control_joint_rad_to_cl>-12.0</control_joint_rad_to_cl>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>elevator_joint</joint_name>
       <sub_topic>servo_2</sub_topic>
     </plugin>
@@ -1104,18 +1097,10 @@
       <forward>1 0 0</forward>
       <upward>0 1 0</upward>
       <link_name>base_link</link_name>
-      <!-- <control_joint_name>
-        rudder_joint
-      </control_joint_name> -->
+      
     </plugin>
-    <!-- <plugin
-      filename="gz-sim-joint-position-controller-system"
-    name="gz::sim::systems::JointPositionController">
-      <joint_name>rudder_joint</joint_name>
-      <sub_topic>servo_5</sub_topic>
-    </plugin> -->
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_0_joint</jointName>
       <linkName>rotor_0</linkName>
       <turningDirection>ccw</turningDirection>
@@ -1131,9 +1116,7 @@
       <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>motor_0_joint</joint_name>
       <sub_topic>servo_3</sub_topic>
       <p_gain>100</p_gain>
@@ -1145,8 +1128,7 @@
       <cmd_min>-2</cmd_min>
       <err_max>0.2</err_max>
     </plugin>
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_1_joint</jointName>
       <linkName>rotor_1</linkName>
       <turningDirection>ccw</turningDirection>
@@ -1162,9 +1144,7 @@
       <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>motor_1_joint</joint_name>
       <sub_topic>servo_4</sub_topic>
       <p_gain>100</p_gain>
@@ -1176,8 +1156,7 @@
       <cmd_min>-2</cmd_min>
       <err_max>0.2</err_max>
     </plugin>
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_2_joint</jointName>
       <linkName>rotor_2</linkName>
       <turningDirection>cw</turningDirection>
@@ -1193,9 +1172,7 @@
       <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>motor_2_joint</joint_name>
       <sub_topic>servo_5</sub_topic>
       <p_gain>100</p_gain>
@@ -1207,8 +1184,7 @@
       <cmd_min>-2</cmd_min>
       <err_max>0.2</err_max>
     </plugin>
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_3_joint</jointName>
       <linkName>rotor_3</linkName>
       <turningDirection>cw</turningDirection>
@@ -1224,9 +1200,7 @@
       <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-    <plugin
-      filename="gz-sim-joint-position-controller-system"
-      name="gz::sim::systems::JointPositionController">
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>motor_3_joint</joint_name>
       <sub_topic>servo_6</sub_topic>
       <p_gain>100</p_gain>
@@ -1239,5 +1213,5 @@
       <err_max>0.2</err_max>
     </plugin>
     <static>0</static>
-  </model>
+  <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController"><joint_name>CameraJoint</joint_name><sub_topic>servo_7</sub_topic><p_gain>10.0</p_gain><i_gain>0.0</i_gain><d_gain>0.1</d_gain><i_max>0.0</i_max><i_min>0.0</i_min><cmd_max>2</cmd_max><cmd_min>-2</cmd_min><err_max>0.5</err_max></plugin></model>
 </sdf>
