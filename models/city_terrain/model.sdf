@@ -28,19 +28,19 @@
             </texture>
 
             <blend>
-              <min_height>0</min_height>
-              <fade_dist>1.5</fade_dist>
+              <min_height>2.0</min_height>
+              <fade_dist>2.0</fade_dist>
             </blend>
 
             <texture>
-              <diffuse>model://ocean/materials/textures/soil_sand_0045_01.jpg</diffuse>
+              <diffuse>model://grass_ground/materials/textures/grass_dry.png</diffuse>
               <normal>model://city_terrain/materials/textures/flat_normal.png</normal>
               <size>10</size>
             </texture>
 
             <blend>
-              <min_height>2.5</min_height>
-              <fade_dist>5</fade_dist>
+              <min_height>10.0</min_height>
+              <fade_dist>5.0</fade_dist>
             </blend>
 
             <texture>
