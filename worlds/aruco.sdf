@@ -118,5 +118,27 @@
       <name>aruco_3</name>
       <pose>-5 5 0.01 0 0 0</pose>
     </include>
+
+    <!-- Tent target 30m away -->
+    <include>
+      <name>tent_target</name>
+      <pose>30 0 0.55 0 0 0</pose>
+      <uri>model://tent</uri>
+      <static>true</static>
+    </include>
+
+    <model name="drone_spawn_platform">
+      <static>true</static>
+      <pose>0 0 40 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>2 2 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
   </world>
 </sdf>
