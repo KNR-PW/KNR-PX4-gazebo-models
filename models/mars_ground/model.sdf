@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.9">
+  <model name="grass_XD">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>100 100</size>
+          </plane>
+        </geometry>
+      </collision>
+      <!-- Grid of 10x10m tiles -->
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <visual name="tile_3_3"><pose>-15 -15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_4_3"><pose>-5 -15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_5_3"><pose>5 -15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_6_3"><pose>15 -15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      
+      
+      
+      
+      
+      
+      <visual name="tile_3_4"><pose>-15 -5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_4_4"><pose>-5 -5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_5_4"><pose>5 -5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_6_4"><pose>15 -5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      
+      
+      
+      
+      
+      
+      <visual name="tile_3_5"><pose>-15 5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_4_5"><pose>-5 5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_5_5"><pose>5 5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_6_5"><pose>15 5 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      
+      
+      
+      
+      
+      
+      <visual name="tile_3_6"><pose>-15 15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_4_6"><pose>-5 15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_5_6"><pose>5 15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      <visual name="tile_6_6"><pose>15 15 0 0 0 0</pose><cast_shadows>false</cast_shadows><geometry><plane><normal>0 0 1</normal><size>10 10</size></plane></geometry><material><diffuse>1 1 1 1</diffuse><ambient>1 1 1 1</ambient><pbr><metal><albedo_map>mars_ground.png</albedo_map></metal></pbr></material></visual>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="probe">
+    <static>false</static>
+
+    <link name="probe_link">
+
+      <!-- Inercja -->
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.0005</ixx>
+          <iyy>0.0005</iyy>
+          <izz>0.0001</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <!-- ===================== -->
+      <!-- Stożek -->
+      <!-- ===================== -->
+      <visual name="tip_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cone>
+            <radius>0.01</radius>
+            <length>0.04</length>
+          </cone>
+        </geometry>
+        <material>
+          <ambient>0.7 1 0 1</ambient>
+          <diffuse>0.7 1 0 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+
+      <collision name="tip_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cone>
+            <radius>0.01</radius>
+            <length>0.04</length>
+          </cone>
+        </geometry>
+      </collision>
+
+      <!-- ===================== -->
+      <!-- Trzon Ø20 -->
+      <!-- ===================== -->
+      <visual name="shaft_visual">
+        <pose>0 0 -0.075 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.01</radius>
+            <length>0.11</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.7 1 0 1</ambient>
+          <diffuse>0.7 1 0 1</diffuse>
+        </material>
+      </visual>
+
+      <collision name="shaft_collision">
+        <pose>0 0 -0.075 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.01</radius>
+            <length>0.11</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <!-- ===================== -->
+      <!-- Uchwyt Ø30 -->
+      <!-- ===================== -->
+      <visual name="handle_visual">
+        <pose>0 0 -0.155 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.7 1 0 1</ambient>
+          <diffuse>0.7 1 0 1</diffuse>
+        </material>
+      </visual>
+
+      <collision name="handle_collision">
+        <pose>0 0 -0.155 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+    </link>
+  </model>
+</sdf>
